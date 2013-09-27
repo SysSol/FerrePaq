@@ -219,16 +219,16 @@ public class Main extends javax.swing.JFrame {
                 prods = st.executeQuery("SELECT * FROM productos");
             else
                 prods = st.executeQuery("SELECT * FROM productos WHERE clave LIKE \""+where+"%\" ");
-            System.out.println("SELECT * FROM productos WHERE clave LIKE \""+where+"%\" ");
             DefaultTableModel tm =  new DefaultTableModel(null,columns);
-            boolean ban=true;            
+                      
             while(prods.next()){
+                boolean ban=true; 
                 String [] row = {prods.getString(1),prods.getString(2),prods.getString(3),prods.getString(4),prods.getString(5)};
                 int n=Tab1.getRowCount();
                 for(int i=0;i<n;i++){                    
-                    if(prods.getString(1)==Tab1.getValueAt(i, 1))
+                    if(prods.getString(1).equals(Tab1.getValueAt(i, 0)))
                        ban=false;
-                    System.out.println(i+": "+prods.getString(1)+" <-> "+Tab1.getValueAt(i, 1));
+                    System.out.println(i+": "+prods.getString(1)+" <-> "+Tab1.getValueAt(i, 0)+ "  ::=="+prods.getString(1).equals((String)Tab1.getValueAt(i, 1)));
                 }
                 if(ban)
                     tm.addRow(row);    
