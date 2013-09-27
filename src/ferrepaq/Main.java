@@ -43,8 +43,7 @@ public class Main extends javax.swing.JFrame {
             String [] columns2 = {"Id","Clave","Tipo","Marca","Precio","Cantidad","Subtotal"};
             
             
-            DefaultTableModel tm;
-            tm =  new DefaultTableModel(null,columns);
+            DefaultTableModel tm =  new DefaultTableModel(null,columns);
             
             Tab1.setModel(new DefaultTableModel(null,columns2));
             
@@ -214,11 +213,35 @@ public class Main extends javax.swing.JFrame {
 
     private void searchTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextKeyReleased
         String where = searchText.getText();
+        String [] columns = {"Id","Clave","Tipo","Marca","Precio"};
         try {
-            prods = st.executeQuery("SELECT * FROM productos WHERE clave LIKE '"+where+"%' ");
+            if("".equals(where))
+                prods = st.executeQuery("SELECT * FROM productos");
+            else
+                prods = st.executeQuery("SELECT * FROM productos WHERE clave LIKE \""+where+"%\" ");
+            System.out.println("SELECT * FROM productos WHERE clave LIKE \""+where+"%\" ");
+            DefaultTableModel tm =  new DefaultTableModel(null,columns);
+            boolean ban=true;            
+            while(prods.next()){
+                String [] row = {prods.getString(1),prods.getString(2),prods.getString(3),prods.getString(4),prods.getString(5)};
+                int n=Tab1.getRowCount();
+                for(int i=0;i<n;i++){                    
+                    if(prods.getString(1)==Tab1.getValueAt(i, 1))
+                       ban=false;
+                    System.out.println(i+": "+prods.getString(1)+" <-> "+Tab1.getValueAt(i, 1));
+                }
+                if(ban)
+                    tm.addRow(row);    
+                System.err.println(".");
+            }
+            
+            Tab.setModel(tm);
+            
+            
         } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_searchTextKeyReleased
 
     /**
