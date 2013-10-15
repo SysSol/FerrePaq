@@ -4,7 +4,8 @@
  */
 package ferrepaq;
 
-import java.beans.PropertyChangeListener;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.*;
 
 /**
@@ -19,9 +21,11 @@ import javax.swing.table.*;
  * @author omar
  */
 public class Main extends javax.swing.JFrame {
-
+    
     Statement st;
     ResultSet prods;
+    double sumt=0;
+    Dimension si = new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().width/3,(int)Toolkit.getDefaultToolkit().getScreenSize().height);
     
     public Main() {
         try {
@@ -46,7 +50,6 @@ public class Main extends javax.swing.JFrame {
             DefaultTableModel tm =  new DefaultTableModel(null,columns);
             
             Tab1.setModel(new DefaultTableModel(null,columns2));
-            
             while(prods.next()){
                 String [] row = {prods.getString(1),prods.getString(2),prods.getString(3),prods.getString(4),prods.getString(5)};
                 tm.addRow(row);
@@ -57,8 +60,10 @@ public class Main extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }
+        this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,13 +84,17 @@ public class Main extends javax.swing.JFrame {
             jScrollPane2 = new javax.swing.JScrollPane();
             Tab1 = new javax.swing.JTable(){
                 public boolean isCellEditable(int rowIndex, int vColIndex){
-                    if(vColIndex==5)
-                    return true;
+                    /*if(vColIndex==5)
+                    return true;*/
                     return false;
                 }
             };
+            jLabel1 = new javax.swing.JLabel();
+            lbltotal = new javax.swing.JLabel();
+            jLabel3 = new javax.swing.JLabel();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+            setUndecorated(true);
 
             jLabel2.setText("Filtrar:");
 
@@ -135,6 +144,11 @@ public class Main extends javax.swing.JFrame {
             });
             jScrollPane2.setViewportView(Tab1);
 
+            jLabel1.setText("Total:");
+
+            jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/switch.png"))); // NOI18N
+
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
@@ -148,9 +162,16 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(0, 0, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addContainerGap())
             );
             layout.setVerticalGroup(
@@ -160,16 +181,25 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(323, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(119, 119, 119)
+                            .addComponent(jLabel3))
+                        .addGroup(layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(84, Short.MAX_VALUE))
             );
 
             pack();
         }// </editor-fold>//GEN-END:initComponents
-
+    
     private void TabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabMouseClicked
         
         DefaultTableModel tm = (DefaultTableModel) Tab.getModel();
@@ -177,6 +207,8 @@ public class Main extends javax.swing.JFrame {
         int row = Tab.getSelectedRow();
         String cant = JOptionPane.showInputDialog("Ingrese la cantidad del producto \n"+(String)Tab.getValueAt(row, 1));
         double subt = Double.parseDouble(cant) * Double.parseDouble((String)Tab.getValueAt(row, 4));
+        sumt+=subt;
+        lbltotal.setText("$"+sumt);
         String [] newRow = {
             (String)Tab.getValueAt(row, 0),
             (String)Tab.getValueAt(row, 1),
@@ -187,30 +219,49 @@ public class Main extends javax.swing.JFrame {
             ""+subt
         };
         tm1.addRow(newRow);
-        tm.removeRow(Tab.getSelectedRow());     
+        tm.removeRow(Tab.getSelectedRow());
         
         
     }//GEN-LAST:event_TabMouseClicked
-
+    
     private void Tab1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tab1MouseClicked
+        int row = Tab1.getSelectedRow();
         if(Tab1.getSelectedColumn()!=5){
             DefaultTableModel tm = (DefaultTableModel) Tab.getModel();
             DefaultTableModel tm1 = (DefaultTableModel) Tab1.getModel();
-                int row = Tab1.getSelectedRow();
             String [] newRow = {
                 (String)Tab1.getValueAt(row, 0),
                 (String)Tab1.getValueAt(row, 1),
                 (String)Tab1.getValueAt(row, 2),
                 (String)Tab1.getValueAt(row, 3),
-                (String)Tab1.getValueAt(row, 4),        
+                (String)Tab1.getValueAt(row, 4),
             };
             tm.addRow(newRow);
-            tm1.removeRow(Tab1.getSelectedRow()); 
+            tm1.removeRow(Tab1.getSelectedRow());
             //falta poner para que se actualice el subtotal de la fila
             
+        }else{
+            
+            if (evt.getClickCount() == 2 && !evt.isConsumed()) {
+                evt.consume();
+                try {
+                    double lastcant=Double.parseDouble((String)Tab1.getValueAt(row, 6));
+                    sumt-=lastcant;
+                    int cant = Integer.parseInt(JOptionPane.showInputDialog(this, "Introduce la nueva cantidad"));
+                    double subt;
+                    subt=cant*Double.parseDouble((String)Tab1.getValueAt(row, 4));
+                    sumt+=subt;
+                    Tab1.setValueAt(subt+"",row, 6);
+                    Tab1.setValueAt(""+cant, row, 5);
+                    lbltotal.setText("$"+sumt);
+                }
+                catch(Exception e) {
+                    System.err.println(e);
+                }
+            }
         }
     }//GEN-LAST:event_Tab1MouseClicked
-
+    
     private void searchTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextKeyReleased
         String where = searchText.getText();
         String [] columns = {"Id","Clave","Tipo","Marca","Precio"};
@@ -219,19 +270,20 @@ public class Main extends javax.swing.JFrame {
                 prods = st.executeQuery("SELECT * FROM productos");
             else
                 prods = st.executeQuery("SELECT * FROM productos WHERE clave LIKE \""+where+"%\" ");
+            
             DefaultTableModel tm =  new DefaultTableModel(null,columns);
-                      
+            prods.first();
             while(prods.next()){
-                boolean ban=true; 
+                boolean ban=true;
                 String [] row = {prods.getString(1),prods.getString(2),prods.getString(3),prods.getString(4),prods.getString(5)};
                 int n=Tab1.getRowCount();
-                for(int i=0;i<n;i++){                    
+                for(int i=0;i<n;i++){
                     if(prods.getString(1).equals(Tab1.getValueAt(i, 0)))
-                       ban=false;
+                        ban=false;
                     System.out.println(i+": "+prods.getString(1)+" <-> "+Tab1.getValueAt(i, 0)+ "  ::=="+prods.getString(1).equals((String)Tab1.getValueAt(i, 1)));
                 }
                 if(ban)
-                    tm.addRow(row);    
+                    tm.addRow(row);
                 System.err.println(".");
             }
             
@@ -244,22 +296,9 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_searchTextKeyReleased
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+         try {
+             UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -269,9 +308,6 @@ public class Main extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);
@@ -281,9 +317,12 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tab;
     private javax.swing.JTable Tab1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbltotal;
     private javax.swing.JTextField searchText;
     // End of variables declaration//GEN-END:variables
 }
