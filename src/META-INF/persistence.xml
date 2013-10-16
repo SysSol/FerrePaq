@@ -14,6 +14,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>ferrepaq.Clientes</class>
     <class>ferrepaq.Productos</class>
+    <class>ferrepaq.Empleados</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ferrepaq?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="123123"/>

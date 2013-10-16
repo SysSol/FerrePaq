@@ -30,6 +30,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         try {
             
+            
             Connection conn = Conexion.GetConnection();
             try {
                 st = conn.createStatement();
@@ -48,7 +49,7 @@ public class Main extends javax.swing.JFrame {
             
             
             DefaultTableModel tm =  new DefaultTableModel(null,columns);
-            
+            lbltotal.setText("$0.0");
             Tab1.setModel(new DefaultTableModel(null,columns2));
             while(prods.next()){
                 String [] row = {prods.getString(1),prods.getString(2),prods.getString(3),prods.getString(4),prods.getString(5)};
@@ -61,7 +62,7 @@ public class Main extends javax.swing.JFrame {
         }
         
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-
+        
     }
     
     /**
@@ -92,6 +93,8 @@ public class Main extends javax.swing.JFrame {
             jLabel1 = new javax.swing.JLabel();
             lbltotal = new javax.swing.JLabel();
             jLabel3 = new javax.swing.JLabel();
+            btnSave = new javax.swing.JButton();
+            btnRollBack = new javax.swing.JButton();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
             setUndecorated(true);
@@ -149,6 +152,20 @@ public class Main extends javax.swing.JFrame {
             jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
             jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/switch.png"))); // NOI18N
 
+            btnSave.setText("Fnalizar Venta");
+            btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    btnSaveMouseClicked(evt);
+                }
+            });
+
+            btnRollBack.setText("Cancelar");
+            btnRollBack.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    btnRollBackMouseClicked(evt);
+                }
+            });
+
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
@@ -171,7 +188,12 @@ public class Main extends javax.swing.JFrame {
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(btnRollBack)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnSave)))
                     .addContainerGap())
             );
             layout.setVerticalGroup(
@@ -194,7 +216,11 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(84, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSave)
+                        .addComponent(btnRollBack))
+                    .addContainerGap())
             );
 
             pack();
@@ -206,7 +232,7 @@ public class Main extends javax.swing.JFrame {
         DefaultTableModel tm1 = (DefaultTableModel) Tab1.getModel();
         int row = Tab.getSelectedRow();
         String cant = JOptionPane.showInputDialog("Ingrese la cantidad del producto \n"+(String)Tab.getValueAt(row, 1));
-        double subt = Double.parseDouble(cant) * Double.parseDouble((String)Tab.getValueAt(row, 4));
+        double subt =Double.parseDouble(cant) * Double.parseDouble((String)Tab.getValueAt(row, 4));
         sumt+=subt;
         lbltotal.setText("$"+sumt);
         String [] newRow = {
@@ -226,6 +252,7 @@ public class Main extends javax.swing.JFrame {
     
     private void Tab1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tab1MouseClicked
         int row = Tab1.getSelectedRow();
+        double lastcant=Double.parseDouble((String)Tab1.getValueAt(row, 6));
         if(Tab1.getSelectedColumn()!=5){
             DefaultTableModel tm = (DefaultTableModel) Tab.getModel();
             DefaultTableModel tm1 = (DefaultTableModel) Tab1.getModel();
@@ -238,6 +265,8 @@ public class Main extends javax.swing.JFrame {
             };
             tm.addRow(newRow);
             tm1.removeRow(Tab1.getSelectedRow());
+            sumt-=lastcant;
+            lbltotal.setText("$"+sumt);
             //falta poner para que se actualice el subtotal de la fila
             
         }else{
@@ -245,7 +274,6 @@ public class Main extends javax.swing.JFrame {
             if (evt.getClickCount() == 2 && !evt.isConsumed()) {
                 evt.consume();
                 try {
-                    double lastcant=Double.parseDouble((String)Tab1.getValueAt(row, 6));
                     sumt-=lastcant;
                     int cant = Integer.parseInt(JOptionPane.showInputDialog(this, "Introduce la nueva cantidad"));
                     double subt;
@@ -266,13 +294,13 @@ public class Main extends javax.swing.JFrame {
         String where = searchText.getText();
         String [] columns = {"Id","Clave","Tipo","Marca","Precio"};
         try {
-            if("".equals(where))
+            if("".equals(where)){
                 prods = st.executeQuery("SELECT * FROM productos");
-            else
-                prods = st.executeQuery("SELECT * FROM productos WHERE clave LIKE \""+where+"%\" ");
-            
+            }
+            else{
+                prods = st.executeQuery("SELECT * FROM productos WHERE clave LIKE \"%"+where+"%\"");
+            }
             DefaultTableModel tm =  new DefaultTableModel(null,columns);
-            prods.first();
             while(prods.next()){
                 boolean ban=true;
                 String [] row = {prods.getString(1),prods.getString(2),prods.getString(3),prods.getString(4),prods.getString(5)};
@@ -284,21 +312,83 @@ public class Main extends javax.swing.JFrame {
                 }
                 if(ban)
                     tm.addRow(row);
-                System.err.println(".");
             }
             
             Tab.setModel(tm);
             
             
         } catch (SQLException ex) {
-            //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
         
     }//GEN-LAST:event_searchTextKeyReleased
-
+    
+    private void btnRollBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRollBackMouseClicked
+        try {
+            sumt=0;
+            searchText.setText("");
+            lbltotal.setText("$0.0");
+            Connection conn = Conexion.GetConnection();
+            try {
+                st = conn.createStatement();
+                prods = st.executeQuery("SELECT * FROM productos");
+                
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex.getErrorCode() + ": " + ex.getMessage());
+            }
+            
+            String [] columns = {"Id","Clave","Tipo","Marca","Precio"};
+            String [] columns2 = {"Id","Clave","Tipo","Marca","Precio","Cantidad","Subtotal"};
+            
+            
+            DefaultTableModel tm =  new DefaultTableModel(null,columns);
+            
+            Tab1.setModel(new DefaultTableModel(null,columns2));
+            while(prods.next()){
+                String [] row = {prods.getString(1),prods.getString(2),prods.getString(3),prods.getString(4),prods.getString(5)};
+                tm.addRow(row);
+            }
+            
+            Tab.setModel(tm);
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+    }//GEN-LAST:event_btnRollBackMouseClicked
+    
+    private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
+        if(sumt>0){
+            int n = Tab1.getRowCount();
+            try {
+                int id_emp;
+                int pass =Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese su contraseña"));
+                ResultSet r = st.executeQuery("SELECT * FROM empleados WHERE password = \""+pass+"\"");
+                if(r.first()){
+                    id_emp = r.getInt(1);
+                    st.execute("INSERT INTO `ferrepaq`.`ventas` (`id_venta`, `id_empleadoFK`, `total_venta`, `fecha_venta`) VALUES (NULL, '"+id_emp+"' , '"+sumt+"', CURRENT_TIMESTAMP);");
+                    r = st.executeQuery("SELECT * from ventas ORDER BY id_venta DESC");
+                    r.first();
+                    for(int i=0; i<n ;i++){
+                        int id_venta = r.getInt(1);
+                        int id_prod = Integer.parseInt((String)Tab1.getValueAt(i, 0));
+                        int cant = Integer.parseInt((String)Tab1.getValueAt(i, 5));
+                        System.out.println("INSERT INTO `ferrepaq`.`produtos_ventas` (`id_productosFK`, `id_ventasFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_venta+"', '"+cant+"');");
+                        st.execute("INSERT INTO `ferrepaq`.`produtos_ventas` (`id_productosFK`, `id_ventasFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_venta+"', '"+cant+"');");
+                    }
+                }
+            } catch(Exception e){
+                System.out.println(e);
+                JOptionPane.showMessageDialog(this, "ERROR: Usuario no encontrado");
+            }
+            
+            
+        }
+    }//GEN-LAST:event_btnSaveMouseClicked
+    
     public static void main(String args[]) {
-         try {
-             UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+        try {
+            UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -317,6 +407,8 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tab;
     private javax.swing.JTable Tab1;
+    private javax.swing.JButton btnRollBack;
+    private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
