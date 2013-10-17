@@ -29,7 +29,8 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Empleados.findAll", query = "SELECT e FROM Empleados e"),
     @NamedQuery(name = "Empleados.findByIdEmpleado", query = "SELECT e FROM Empleados e WHERE e.idEmpleado = :idEmpleado"),
     @NamedQuery(name = "Empleados.findByTelefono", query = "SELECT e FROM Empleados e WHERE e.telefono = :telefono"),
-    @NamedQuery(name = "Empleados.findByNivelAcceso", query = "SELECT e FROM Empleados e WHERE e.nivelAcceso = :nivelAcceso")})
+    @NamedQuery(name = "Empleados.findByNivelAcceso", query = "SELECT e FROM Empleados e WHERE e.nivelAcceso = :nivelAcceso"),
+    @NamedQuery(name = "Empleados.findByPassword", query = "SELECT e FROM Empleados e WHERE e.password = :password")})
 public class Empleados implements Serializable {
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
@@ -48,6 +49,9 @@ public class Empleados implements Serializable {
     @Basic(optional = false)
     @Column(name = "nivel_acceso")
     private int nivelAcceso;
+    @Basic(optional = false)
+    @Column(name = "password")
+    private int password;
 
     public Empleados() {
     }
@@ -56,10 +60,11 @@ public class Empleados implements Serializable {
         this.idEmpleado = idEmpleado;
     }
 
-    public Empleados(Integer idEmpleado, String nombreEmpleado, int nivelAcceso) {
+    public Empleados(Integer idEmpleado, String nombreEmpleado, int nivelAcceso, int password) {
         this.idEmpleado = idEmpleado;
         this.nombreEmpleado = nombreEmpleado;
         this.nivelAcceso = nivelAcceso;
+        this.password = password;
     }
 
     public Integer getIdEmpleado() {
@@ -100,6 +105,16 @@ public class Empleados implements Serializable {
         int oldNivelAcceso = this.nivelAcceso;
         this.nivelAcceso = nivelAcceso;
         changeSupport.firePropertyChange("nivelAcceso", oldNivelAcceso, nivelAcceso);
+    }
+
+    public int getPassword() {
+        return password;
+    }
+
+    public void setPassword(int password) {
+        int oldPassword = this.password;
+        this.password = password;
+        changeSupport.firePropertyChange("password", oldPassword, password);
     }
 
     @Override

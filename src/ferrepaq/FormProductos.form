@@ -69,6 +69,7 @@
                   <Component id="tipoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="marcaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="precioUnitLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="cantidadLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -76,6 +77,7 @@
                   <Component id="tipoField" alignment="0" pref="315" max="32767" attributes="0"/>
                   <Component id="marcaField" alignment="0" pref="315" max="32767" attributes="0"/>
                   <Component id="precioUnitField" alignment="0" pref="315" max="32767" attributes="0"/>
+                  <Component id="cantidadField" alignment="0" pref="315" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -110,6 +112,11 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="precioUnitLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="precioUnitField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cantidadLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cantidadField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="1"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -154,6 +161,10 @@
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN" value="4"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Double.class"/>
               </Subbinding>
+              <Subbinding sourcePath="${cantidad}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN" value="5"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
+              </Subbinding>
             </BindingProperty>
           </BindingProperties>
           <AuxValues>
@@ -181,6 +192,11 @@
     <Component class="javax.swing.JLabel" name="precioUnitLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Precio Unit:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="cantidadLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cantidad:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="claveField">
@@ -213,6 +229,14 @@
           <Property name="incompletePathValue" type="java.lang.String" value="null"/>
         </BindingProperty>
         <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="precioUnitField" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="cantidadField">
+      <BindingProperties>
+        <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.cantidad}" target="cantidadField" targetPath="text" updateStrategy="0" immediately="false">
+          <Property name="incompletePathValue" type="java.lang.String" value="null"/>
+        </BindingProperty>
+        <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="cantidadField" targetPath="enabled" updateStrategy="1" immediately="false"/>
       </BindingProperties>
     </Component>
     <Component class="javax.swing.JButton" name="saveButton">

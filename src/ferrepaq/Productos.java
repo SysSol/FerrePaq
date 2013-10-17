@@ -30,7 +30,8 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Productos.findByIdProducto", query = "SELECT p FROM Productos p WHERE p.idProducto = :idProducto"),
     @NamedQuery(name = "Productos.findByClave", query = "SELECT p FROM Productos p WHERE p.clave = :clave"),
     @NamedQuery(name = "Productos.findByMarca", query = "SELECT p FROM Productos p WHERE p.marca = :marca"),
-    @NamedQuery(name = "Productos.findByPrecioUnit", query = "SELECT p FROM Productos p WHERE p.precioUnit = :precioUnit")})
+    @NamedQuery(name = "Productos.findByPrecioUnit", query = "SELECT p FROM Productos p WHERE p.precioUnit = :precioUnit"),
+    @NamedQuery(name = "Productos.findByCantidad", query = "SELECT p FROM Productos p WHERE p.cantidad = :cantidad")})
 public class Productos implements Serializable {
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
@@ -52,6 +53,9 @@ public class Productos implements Serializable {
     @Basic(optional = false)
     @Column(name = "precio_unit")
     private double precioUnit;
+    @Basic(optional = false)
+    @Column(name = "cantidad")
+    private int cantidad;
 
     public Productos() {
     }
@@ -60,11 +64,12 @@ public class Productos implements Serializable {
         this.idProducto = idProducto;
     }
 
-    public Productos(Integer idProducto, String clave, String tipo, double precioUnit) {
+    public Productos(Integer idProducto, String clave, String tipo, double precioUnit, int cantidad) {
         this.idProducto = idProducto;
         this.clave = clave;
         this.tipo = tipo;
         this.precioUnit = precioUnit;
+        this.cantidad = cantidad;
     }
 
     public Integer getIdProducto() {
@@ -115,6 +120,16 @@ public class Productos implements Serializable {
         double oldPrecioUnit = this.precioUnit;
         this.precioUnit = precioUnit;
         changeSupport.firePropertyChange("precioUnit", oldPrecioUnit, precioUnit);
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        int oldCantidad = this.cantidad;
+        this.cantidad = cantidad;
+        changeSupport.firePropertyChange("cantidad", oldCantidad, cantidad);
     }
 
     @Override
