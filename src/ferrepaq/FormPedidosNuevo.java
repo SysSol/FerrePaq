@@ -121,6 +121,10 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                     return false;
                 }}
                 ;
+                jLabel5 = new javax.swing.JLabel();
+                lblCliente = new javax.swing.JLabel();
+                lblID = new javax.swing.JLabel();
+                jLabel6 = new javax.swing.JLabel();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -213,6 +217,10 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                 });
                 jScrollPane3.setViewportView(Tab2);
 
+                jLabel5.setText("Cliente:");
+
+                jLabel6.setText("ID:");
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
                 layout.setHorizontalGroup(
@@ -225,7 +233,7 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,20 +245,28 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                                                 .addComponent(jLabel4)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(searchText1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(0, 0, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(43, 43, 43)
+                                        .addComponent(btnRollBack)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnSave))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(1084, 1084, 1084)
-                                .addComponent(btnRollBack)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSave)))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap())
                 );
                 layout.setVerticalGroup(
@@ -279,8 +295,13 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave)
                             .addComponent(btnRollBack))
@@ -442,20 +463,23 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
             int n = Tab1.getRowCount();
             try {
                 int id_emp;
-                int pass =Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese su contraseña"));
+                int id_cli=Integer.parseInt(lblID.getText());
+                int total = Integer.parseInt(this.lbltotal.getText());
+                int pass = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese su contraseña"));
                 ResultSet r = st.executeQuery("SELECT * FROM empleados WHERE password = \""+pass+"\"");
+                
                 if(r.first()){
                     id_emp = r.getInt(1);
-                    st.execute("INSERT INTO `ferrepaq`.`ventas` (`id_venta`, `id_empleadoFK`, `total_venta`, `fecha_venta`) VALUES (NULL, '"+id_emp+"' , '"+sumt+"', CURRENT_TIMESTAMP);");
-                    r = st.executeQuery("SELECT * from ventas ORDER BY id_venta DESC");
+                    st.execute("INSERT INTO `ferrepaq`.`pedidos` (`id_pedido`, `total_venta`, `id_empleadoFK`, `id_clienteFK`) VALUES (NULL, '"+total+"' , '"+id_emp+"','"+id_cli+"');");        
+                    r = st.executeQuery("SELECT * from pedidos ORDER BY id_pedido DESC");
                     r.first();
                     for(int i=0; i<n ;i++){
-                        int id_venta = r.getInt(1);
+                        int id_pedido = r.getInt(1);
                         int id_prod = Integer.parseInt((String)Tab1.getValueAt(i, 0));
                         int cant = Integer.parseInt((String)Tab1.getValueAt(i, 5));
 
-                        System.out.println("INSERT INTO `ferrepaq`.`produtos_ventas` (`id_productosFK`, `id_ventasFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_venta+"', '"+cant+"');");
-                        st.execute("INSERT INTO `ferrepaq`.`produtos_ventas` (`id_productosFK`, `id_ventasFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_venta+"', '"+cant+"');");
+                        System.out.println("INSERT INTO `ferrepaq`.`produtos_pedidos` (`id_productosFK`, `id_pedidosFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_pedido+"', '"+cant+"');");
+                        st.execute("INSERT INTO `ferrepaq`.`produtos_pedidos` (`id_productosFK`, `id_pedidosFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_pedido+"', '"+cant+"');");
 
                         System.out.println("UPDATE  `ferrepaq`.`productos` SET  `cantidad` = `cantidad` - "+cant+" WHERE  `productos`.`id_producto` = "+id_prod+";");
                         st.execute("UPDATE  `ferrepaq`.`productos` SET  `cantidad` = `cantidad` - "+cant+" WHERE  `productos`.`id_producto` = "+id_prod+";");
@@ -505,6 +529,14 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
 
     private void Tab2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tab2MouseClicked
         // TODO add your handling code here:
+        int row = Tab2.getSelectedRow();
+        
+        if(!"".equals((String)Tab2.getValueAt(row,1))){
+            String nombre = ((String)Tab2.getValueAt(row,1));
+            String id = ((String)Tab2.getValueAt(row,0));
+            lblCliente.setText(nombre);
+            lblID.setText(id);
+        }
         
     }//GEN-LAST:event_Tab2MouseClicked
 
@@ -552,9 +584,13 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblCliente;
+    private javax.swing.JLabel lblID;
     private javax.swing.JLabel lbltotal;
     private javax.swing.JTextField searchText;
     private javax.swing.JTextField searchText1;
