@@ -6,6 +6,8 @@ package ferrepaq;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -442,6 +444,39 @@ public class Main extends javax.swing.JFrame {
         JLabel lblps= new JLabel("Contraseña:"), lblus = new JLabel("Usuario:");
         JPasswordField pass = new JPasswordField(10);
         JTextField usr = new JTextField(10);
+        
+        usr.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyTyped(KeyEvent e)
+            {
+                char caracter = e.getKeyChar();
+                if( caracter < 'A' || caracter >'Z')
+                    if( caracter < 'a' || caracter > 'z' )
+                        if( caracter < '0' || caracter > '9'  )
+                        {
+                            e.consume();
+                        }
+            }
+        });
+        
+        pass.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyTyped(KeyEvent e)
+            {
+                char caracter = e.getKeyChar();
+                if(((caracter < '0') ||
+                        (caracter > '9')) &&
+                        (caracter != KeyEvent.VK_BACK_SPACE))
+                {
+                    e.consume();
+                }
+            }
+        });
+        
+        
+        
         panel.add(lblus);
         panel.add(usr);
         panel.add(lblps);
@@ -449,9 +484,10 @@ public class Main extends javax.swing.JFrame {
         
         
         String[] options = new String[]{"OK", "Cancelar"};
-        int option = JOptionPane.showOptionDialog(null, panel, "Ingrese con su Id y su Contraseña",
+        int option = JOptionPane.showOptionDialog(this, panel, "Ingrese con su Id y su Contraseña",
                 JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options, options[1]);
+      
         
         
         if(option == 0) // pressing OK button
