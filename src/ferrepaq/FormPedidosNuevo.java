@@ -187,6 +187,11 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                         btnSaveMouseClicked(evt);
                     }
                 });
+                btnSave.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        btnSaveActionPerformed(evt);
+                    }
+                });
 
                 jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/switch.png"))); // NOI18N
@@ -293,14 +298,14 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel6)
-                                .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel1)
+                                .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave)
@@ -463,28 +468,31 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
             int n = Tab1.getRowCount();
             try {
                 int id_emp;
-                int id_cli=Integer.parseInt(lblID.getText());
-                int total = Integer.parseInt(this.lbltotal.getText());
+                
                 int pass = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese su contraseña"));
                 ResultSet r = st.executeQuery("SELECT * FROM empleados WHERE password = \""+pass+"\"");
                 
                 if(r.first()){
-                    id_emp = r.getInt(1);
-                    st.execute("INSERT INTO `ferrepaq`.`pedidos` (`id_pedido`, `total_venta`, `id_empleadoFK`, `id_clienteFK`) VALUES (NULL, '"+total+"' , '"+id_emp+"','"+id_cli+"');");        
-                    r = st.executeQuery("SELECT * from pedidos ORDER BY id_pedido DESC");
-                    r.first();
-                    for(int i=0; i<n ;i++){
-                        int id_pedido = r.getInt(1);
-                        int id_prod = Integer.parseInt((String)Tab1.getValueAt(i, 0));
-                        int cant = Integer.parseInt((String)Tab1.getValueAt(i, 5));
+                    if(!" ".equals(lblID.getText()));{
+                        id_emp = r.getInt(1);
+                        int id_cli = Integer.parseInt(lblID.getText());
+                        int total = Integer.parseInt(this.lbltotal.getText());
+                        st.execute("INSERT INTO `ferrepaq`.`pedidos` (`id_pedido`, `total_venta`, `id_empleadoFK`, `id_clienteFK`) VALUES (NULL, '"+total+"' , '"+id_emp+"','"+id_cli+"');");        
+                        r = st.executeQuery("SELECT * from pedidos ORDER BY id_pedido DESC");
+                        r.first();
+                        for(int i=0; i<n ;i++){
+                            int id_pedido = r.getInt(1);
+                            int id_prod = Integer.parseInt((String)Tab1.getValueAt(i, 0));
+                            int cant = Integer.parseInt((String)Tab1.getValueAt(i, 5));
 
-                        System.out.println("INSERT INTO `ferrepaq`.`produtos_pedidos` (`id_productosFK`, `id_pedidosFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_pedido+"', '"+cant+"');");
-                        st.execute("INSERT INTO `ferrepaq`.`produtos_pedidos` (`id_productosFK`, `id_pedidosFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_pedido+"', '"+cant+"');");
+                            System.out.println("INSERT INTO `ferrepaq`.`produtos_pedidos` (`id_productosFK`, `id_pedidosFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_pedido+"', '"+cant+"');");
+                            st.execute("INSERT INTO `ferrepaq`.`produtos_pedidos` (`id_productosFK`, `id_pedidosFK`, `cantidad`) VALUES ('"+id_prod+"', '"+id_pedido+"', '"+cant+"');");
 
-                        System.out.println("UPDATE  `ferrepaq`.`productos` SET  `cantidad` = `cantidad` - "+cant+" WHERE  `productos`.`id_producto` = "+id_prod+";");
-                        st.execute("UPDATE  `ferrepaq`.`productos` SET  `cantidad` = `cantidad` - "+cant+" WHERE  `productos`.`id_producto` = "+id_prod+";");
-
+                            System.out.println("UPDATE  `ferrepaq`.`productos` SET  `cantidad` = `cantidad` - "+cant+" WHERE  `productos`.`id_producto` = "+id_prod+";");
+                            st.execute("UPDATE  `ferrepaq`.`productos` SET  `cantidad` = `cantidad` - "+cant+" WHERE  `productos`.`id_producto` = "+id_prod+";");
+                        }
                     }
+                    
                 }
             } catch(Exception e){
                 System.out.println(e);
@@ -500,11 +508,11 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
         String where = searchText1.getText();
         String [] columns = {"Id","Nombre","Telefono","Direccion","Telefono Alt."};
         try {
-            if("".equals(where)){
+            if(" ".equals(where)){
                 client = st.executeQuery("SELECT * FROM clientes");
             }
             else{
-                client = st.executeQuery("SELECT * FROM clientes WHERE nombre LIKE \"%"+where+"%\"");
+                client = st.executeQuery("SELECT * FROM clientes WHERE nombre_cliente LIKE \"%"+where+"%\"");
             }
             DefaultTableModel tm =  new DefaultTableModel(null,columns);
             while(client.next()){
@@ -512,9 +520,9 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                 String [] row = {client.getString(1),client.getString(2),client.getString(3),client.getString(4),client.getString(5)};
                 int n=Tab2.getRowCount();
                 for(int i=0;i<n;i++){
-                    if(client.getString(1).equals(Tab2.getValueAt(i, 0)))
+                    if(client.getString(1).equals(Tab2.getValueAt(i, 1)))
                     ban=false;
-                    System.out.println(i+": "+client.getString(1)+" <-> "+Tab2.getValueAt(i, 0)+ "  ::=="+client.getString(1).equals((String)Tab2.getValueAt(i, 1)));
+                    System.out.println(i+": "+client.getString(1)+" <-> "+Tab2.getValueAt(i, 1)+ "  ::=="+client.getString(1).equals((String)Tab2.getValueAt(i, 1)));
                 }
                 if(ban)
                 tm.addRow(row);
@@ -539,6 +547,10 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_Tab2MouseClicked
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments
