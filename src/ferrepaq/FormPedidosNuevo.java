@@ -397,6 +397,7 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                     (String)Tab1.getValueAt(row, 4),
                     rs.getInt(6)+""
                 };
+                //huehue
                 tm.addRow(newRow);
                 tm1.removeRow(Tab1.getSelectedRow());
                 sumt-=lastcant;
