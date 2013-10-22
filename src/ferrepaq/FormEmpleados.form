@@ -66,6 +66,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="nombreEmpleadoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="aliasLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="telefonoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="nivelAccesoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="passwordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -73,6 +74,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="nombreEmpleadoField" alignment="0" pref="315" max="32767" attributes="0"/>
+                  <Component id="aliasField" alignment="0" pref="315" max="32767" attributes="0"/>
                   <Component id="telefonoField" alignment="0" pref="315" max="32767" attributes="0"/>
                   <Component id="nivelAccesoField" alignment="0" pref="315" max="32767" attributes="0"/>
                   <Component id="passwordField" alignment="0" pref="315" max="32767" attributes="0"/>
@@ -95,6 +97,11 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="nombreEmpleadoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="nombreEmpleadoField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="aliasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="aliasField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -154,6 +161,10 @@
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN" value="4"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
               </Subbinding>
+              <Subbinding sourcePath="${alias}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN" value="5"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
             </BindingProperty>
           </BindingProperties>
           <AuxValues>
@@ -166,6 +177,11 @@
     <Component class="javax.swing.JLabel" name="nombreEmpleadoLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre Empleado:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="aliasLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alias:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="telefonoLabel">
@@ -189,6 +205,14 @@
           <Property name="incompletePathValue" type="java.lang.String" value="null"/>
         </BindingProperty>
         <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="nombreEmpleadoField" targetPath="enabled" updateStrategy="1" immediately="false"/>
+      </BindingProperties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="aliasField">
+      <BindingProperties>
+        <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.alias}" target="aliasField" targetPath="text" updateStrategy="0" immediately="false">
+          <Property name="incompletePathValue" type="java.lang.String" value="null"/>
+        </BindingProperty>
+        <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="aliasField" targetPath="enabled" updateStrategy="1" immediately="false"/>
       </BindingProperties>
     </Component>
     <Component class="javax.swing.JTextField" name="telefonoField">

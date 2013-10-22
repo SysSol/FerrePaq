@@ -119,136 +119,150 @@ public class Main extends javax.swing.JFrame {
                     searchTextKeyReleased(evt);
                 }
             });
+            searchText.addKeyListener(new KeyAdapter()
+                {
+                    @Override
+                    public void keyTyped(KeyEvent e)
+                    {
+                        char caracter = e.getKeyChar();
+                        if( caracter < 'A' || caracter >'Z')
+                        if( caracter < 'a' || caracter > 'z' )
+                        if( caracter < '0' || caracter > '9'  )
+                        {
+                            e.consume();
+                        }
+                    }
+                });
 
-            jScrollPane1.setNextFocusableComponent(jScrollPane2);
+                jScrollPane1.setNextFocusableComponent(jScrollPane2);
 
-            Tab.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null}
-                },
-                new String [] {
-                    "Title 1", "Title 2", "Title 3", "Title 4"
-                }
-            ));
-            Tab.setNextFocusableComponent(Tab1);
-            Tab.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    TabMouseClicked(evt);
-                }
-            });
-            jScrollPane1.setViewportView(Tab);
+                Tab.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                    },
+                    new String [] {
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                    }
+                ));
+                Tab.setNextFocusableComponent(Tab1);
+                Tab.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        TabMouseClicked(evt);
+                    }
+                });
+                jScrollPane1.setViewportView(Tab);
 
-            Tab1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null}
-                },
-                new String [] {
-                    "Title 1", "Title 2", "Title 3", "Title 4"
-                }
-            ));
-            Tab1.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    Tab1MouseClicked(evt);
-                }
-            });
-            jScrollPane2.setViewportView(Tab1);
+                Tab1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                    },
+                    new String [] {
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                    }
+                ));
+                Tab1.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        Tab1MouseClicked(evt);
+                    }
+                });
+                jScrollPane2.setViewportView(Tab1);
 
-            jLabel1.setText("Total:");
+                jLabel1.setText("Total:");
 
-            jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/switch.png"))); // NOI18N
+                jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/switch.png"))); // NOI18N
 
-            btnSave.setText("Fnalizar Venta");
-            btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    btnSaveMouseClicked(evt);
-                }
-            });
+                btnSave.setText("Fnalizar Venta");
+                btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        btnSaveMouseClicked(evt);
+                    }
+                });
 
-            btnRollBack.setText("Cancelar");
-            btnRollBack.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    btnRollBackMouseClicked(evt);
-                }
-            });
+                btnRollBack.setText("Cancelar");
+                btnRollBack.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        btnRollBackMouseClicked(evt);
+                    }
+                });
 
-            btnToAdmin.setText("Ingresar Como Administrador");
-            btnToAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    btnToAdminMouseClicked(evt);
-                }
-            });
+                btnToAdmin.setText("Ingresar Como Administrador");
+                btnToAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        btnToAdminMouseClicked(evt);
+                    }
+                });
 
-            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-            getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnToAdmin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRollBack)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSave)))
+                        .addContainerGap())
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(btnToAdmin)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(119, 119, 119)
+                                .addComponent(jLabel3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane1)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSave)
                             .addComponent(btnRollBack)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnSave)))
-                    .addContainerGap())
-            );
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(28, 28, 28)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(119, 119, 119)
-                            .addComponent(jLabel3))
-                        .addGroup(layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane1)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSave)
-                        .addComponent(btnRollBack)
-                        .addComponent(btnToAdmin))
-                    .addContainerGap())
-            );
+                            .addComponent(btnToAdmin))
+                        .addContainerGap())
+                );
 
-            pack();
-        }// </editor-fold>//GEN-END:initComponents
+                pack();
+            }// </editor-fold>//GEN-END:initComponents
     
     private void TabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabMouseClicked
-
+        
         DefaultTableModel tm = (DefaultTableModel) Tab.getModel();
         DefaultTableModel tm1 = (DefaultTableModel) Tab1.getModel();
         int row = Tab.getSelectedRow();
@@ -330,6 +344,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_Tab1MouseClicked
     
     private void searchTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextKeyReleased
+        
+        
         String where = searchText.getText();
         String [] columns = {"Id","Clave","Tipo","Marca","Precio","Cantidad"};
         try {
@@ -418,7 +434,7 @@ public class Main extends javax.swing.JFrame {
                         
                         System.out.println("UPDATE  `ferrepaq`.`productos` SET  `cantidad` = `cantidad` - "+cant+" WHERE  `productos`.`id_producto` = "+id_prod+";");
                         st.execute("UPDATE  `ferrepaq`.`productos` SET  `cantidad` = `cantidad` - "+cant+" WHERE  `productos`.`id_producto` = "+id_prod+";");
-                        
+                        btnRollBackMouseClicked(evt);
                     }
                 }
             } catch(Exception e){
@@ -428,72 +444,24 @@ public class Main extends javax.swing.JFrame {
             
             
         }
-       
+        
     }//GEN-LAST:event_btnSaveMouseClicked
-
+    
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         if(evt.getKeyCode()==113){
             JOptionPane.showMessageDialog(this, "Espere porvafor...");
             FormMaster fm = new FormMaster();
-            fm.setVisible(true);        
+            fm.setVisible(true);
         }
     }//GEN-LAST:event_formKeyPressed
-
+    
     private void btnToAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnToAdminMouseClicked
-        JPanel panel = new JPanel();
-        JLabel lblps= new JLabel("Contraseña:"), lblus = new JLabel("Usuario:");
-        JPasswordField pass = new JPasswordField(10);
-        JTextField usr = new JTextField(10);
-        
-        usr.addKeyListener(new KeyAdapter()
+        LoginPane lp = new LoginPane();
+        boolean option=lp.getOption();
+        String password=lp.getPassword();
+        String user=lp.getUser();
+        if(option) // pressing OK button
         {
-            @Override
-            public void keyTyped(KeyEvent e)
-            {
-                char caracter = e.getKeyChar();
-                if( caracter < 'A' || caracter >'Z')
-                    if( caracter < 'a' || caracter > 'z' )
-                        if( caracter < '0' || caracter > '9'  )
-                        {
-                            e.consume();
-                        }
-            }
-        });
-        
-        pass.addKeyListener(new KeyAdapter()
-        {
-            @Override
-            public void keyTyped(KeyEvent e)
-            {
-                char caracter = e.getKeyChar();
-                if(((caracter < '0') ||
-                        (caracter > '9')) &&
-                        (caracter != KeyEvent.VK_BACK_SPACE))
-                {
-                    e.consume();
-                }
-            }
-        });
-        
-        
-        
-        panel.add(lblus);
-        panel.add(usr);
-        panel.add(lblps);
-        panel.add(pass);
-        
-        
-        String[] options = new String[]{"OK", "Cancelar"};
-        int option = JOptionPane.showOptionDialog(this, panel, "Ingrese con su Id y su Contraseña",
-                JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, options, options[1]);
-      
-        
-        
-        if(option == 0) // pressing OK button
-        {
-            String password = pass.getText();
-            String user = usr.getText();
             try {
                 ResultSet rs = st.executeQuery(
                         "SELECT * \n" +

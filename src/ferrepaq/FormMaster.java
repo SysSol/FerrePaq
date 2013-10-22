@@ -18,6 +18,7 @@ public class FormMaster extends javax.swing.JFrame {
     public FormMaster() {
         initComponents();
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        paneles.add(new FormPedidosNuevo().getContentPane(), "Pedidos");
         paneles.add(new FormProductos(),"Productos");
         paneles.add(new FormClientes(),"Clientes");
         paneles.add(new FormEmpleados(),"Empleados");

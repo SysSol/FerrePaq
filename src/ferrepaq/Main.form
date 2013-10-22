@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="undecorated" type="boolean" value="true"/>
@@ -114,6 +114,9 @@
       <Events>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="searchTextKeyReleased"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="searchText.addKeyListener(new KeyAdapter()&#xa;        {&#xa;            @Override&#xa;            public void keyTyped(KeyEvent e)&#xa;            {&#xa;                char caracter = e.getKeyChar();&#xa;                if( caracter &lt; &apos;A&apos; || caracter &gt;&apos;Z&apos;)&#xa;                    if( caracter &lt; &apos;a&apos; || caracter &gt; &apos;z&apos; )&#xa;                        if( caracter &lt; &apos;0&apos; || caracter &gt; &apos;9&apos;  )&#xa;                        {&#xa;                            e.consume();&#xa;                        }&#xa;            }&#xa;});"/>
+      </AuxValues>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>

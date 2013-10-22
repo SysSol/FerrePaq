@@ -30,7 +30,8 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Empleados.findByIdEmpleado", query = "SELECT e FROM Empleados e WHERE e.idEmpleado = :idEmpleado"),
     @NamedQuery(name = "Empleados.findByTelefono", query = "SELECT e FROM Empleados e WHERE e.telefono = :telefono"),
     @NamedQuery(name = "Empleados.findByNivelAcceso", query = "SELECT e FROM Empleados e WHERE e.nivelAcceso = :nivelAcceso"),
-    @NamedQuery(name = "Empleados.findByPassword", query = "SELECT e FROM Empleados e WHERE e.password = :password")})
+    @NamedQuery(name = "Empleados.findByPassword", query = "SELECT e FROM Empleados e WHERE e.password = :password"),
+    @NamedQuery(name = "Empleados.findByAlias", query = "SELECT e FROM Empleados e WHERE e.alias = :alias")})
 public class Empleados implements Serializable {
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
@@ -52,6 +53,9 @@ public class Empleados implements Serializable {
     @Basic(optional = false)
     @Column(name = "password")
     private int password;
+    @Basic(optional = false)
+    @Column(name = "alias")
+    private String alias;
 
     public Empleados() {
     }
@@ -60,11 +64,12 @@ public class Empleados implements Serializable {
         this.idEmpleado = idEmpleado;
     }
 
-    public Empleados(Integer idEmpleado, String nombreEmpleado, int nivelAcceso, int password) {
+    public Empleados(Integer idEmpleado, String nombreEmpleado, int nivelAcceso, int password, String alias) {
         this.idEmpleado = idEmpleado;
         this.nombreEmpleado = nombreEmpleado;
         this.nivelAcceso = nivelAcceso;
         this.password = password;
+        this.alias = alias;
     }
 
     public Integer getIdEmpleado() {
@@ -115,6 +120,16 @@ public class Empleados implements Serializable {
         int oldPassword = this.password;
         this.password = password;
         changeSupport.firePropertyChange("password", oldPassword, password);
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        String oldAlias = this.alias;
+        this.alias = alias;
+        changeSupport.firePropertyChange("alias", oldAlias, alias);
     }
 
     @Override
