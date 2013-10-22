@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Panke
  */
-public class FormPedidosNuevo extends javax.swing.JFrame {
+public class PanelPedidosNuevo extends javax.swing.JFrame {
 
     /**
      * Creates new form FormPedidosNuevo
@@ -30,7 +30,7 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
     double sumt=0;
     Dimension si = new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().width/3,(int)Toolkit.getDefaultToolkit().getScreenSize().height);
     
-    public FormPedidosNuevo() {
+    public PanelPedidosNuevo() {
         try {
             
             
@@ -69,6 +69,7 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
             
             while(client.next()){
                 String [] row1 = {client.getString(1),client.getString(2),client.getString(3),client.getString(4),client.getString(5)};
+                
                 tm1.addRow(row1);
             }
             
@@ -477,12 +478,13 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                     if(!" ".equals(lblID.getText()));{
                         id_emp = r.getInt(1);
                         int id_cli = Integer.parseInt(lblID.getText());
-                        int total = Integer.parseInt(this.lbltotal.getText());
-                        st.execute("INSERT INTO `ferrepaq`.`pedidos` (`id_pedido`, `total_venta`, `id_empleadoFK`, `id_clienteFK`) VALUES (NULL, '"+total+"' , '"+id_emp+"','"+id_cli+"');");        
+                        double total = sumt;
+                        st.execute("INSERT INTO `ferrepaq`.`pedidos` (`id_pedido`, `total_pedido`, `id_empleadoFK`, `id_clienteFK`) VALUES (NULL, '"+total+"' , '"+id_emp+"','"+id_cli+"');");        
                         r = st.executeQuery("SELECT * from pedidos ORDER BY id_pedido DESC");
                         r.first();
+                        int id_pedido = r.getInt(1);
                         for(int i=0; i<n ;i++){
-                            int id_pedido = r.getInt(1);
+                            
                             int id_prod = Integer.parseInt((String)Tab1.getValueAt(i, 0));
                             int cant = Integer.parseInt((String)Tab1.getValueAt(i, 5));
 
@@ -570,20 +572,20 @@ public class FormPedidosNuevo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormPedidosNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PanelPedidosNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormPedidosNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PanelPedidosNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormPedidosNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PanelPedidosNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormPedidosNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PanelPedidosNuevo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormPedidosNuevo().setVisible(true);
+                new PanelPedidosNuevo().setVisible(true);
             }
         });
     }

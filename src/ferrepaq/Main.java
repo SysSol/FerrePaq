@@ -450,7 +450,7 @@ public class Main extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         if(evt.getKeyCode()==113){
             JOptionPane.showMessageDialog(this, "Espere porvafor...");
-            FormMaster fm = new FormMaster();
+            FormAdministrador fm = new FormAdministrador();
             fm.setVisible(true);
         }
     }//GEN-LAST:event_formKeyPressed
@@ -471,7 +471,7 @@ public class Main extends javax.swing.JFrame {
                 
                 if(rs.first()){
                     JOptionPane.showMessageDialog(this, "Abriendo ventana...");
-                    FormMaster fm = new FormMaster();
+                    FormAdministrador fm = new FormAdministrador();
                     fm.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this,"Usuarioo o contraseña inválidos");

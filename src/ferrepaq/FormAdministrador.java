@@ -10,18 +10,18 @@ import java.awt.Toolkit;
  *
  * @author Omar Benitez
  */
-public class FormMaster extends javax.swing.JFrame {
+public class FormAdministrador extends javax.swing.JFrame {
 
     /**
      * Creates new form FormMaster
      */
-    public FormMaster() {
+    public FormAdministrador() {
         initComponents();
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        paneles.add(new FormPedidosNuevo().getContentPane(), "Pedidos");
-        paneles.add(new FormProductos(),"Productos");
-        paneles.add(new FormClientes(),"Clientes");
-        paneles.add(new FormEmpleados(),"Empleados");
+        paneles.add(new PanelPedidosNuevo().getContentPane(), "Nuevo Pedido");
+        paneles.add(new PanelProductos(),"Productos");
+        paneles.add(new PanelClientes(),"Clientes");
+        paneles.add(new PanelEmpleados(),"Empleados");
         
         
         
@@ -71,20 +71,20 @@ public class FormMaster extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormMaster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormMaster().setVisible(true);
+                new FormAdministrador().setVisible(true);
             }
         });
     }
