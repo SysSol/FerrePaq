@@ -252,12 +252,13 @@ public class FormPedidosMod extends javax.swing.JFrame {
         
         String [] columns = {"Id","Clave","Tipo","Marca","Precio","Cantidad"};
         DefaultTableModel tm = new DefaultTableModel(null,columns);
-        //if(!"0".equals((String)Tab.getValueAt(row,0))){
+        //if(!"0".equals((String)Tab.getValueAt(row,0))){|
             try{
                 String where = (String)Tab.getValueAt(row, 0);
                 
-                System.out.println(where);
-                prods = st.executeQuery("SELECT p.id_producto, p.clave, p.tipo, p.marca, p.precio_unit, p.cantidad FROM ferrepaq.productos p, ferrepaq.produtos_pedidos pp WHERE pp.id_pedidosFK = \"%"+where+"%\" AND pp.id_productosFK = p.id_producto");
+                //System.out.println(where);
+                //System.out.println("SELECT p.id_producto, p.clave, p.tipo, p.marca, p.precio_unit, p.cantidad FROM ferrepaq.productos p, ferrepaq.produtos_pedidos pp WHERE pp.id_pedidosFK = \"%"+where+"%\" AND pp.id_productosFK = p.id_producto");
+                prods = st.executeQuery("SELECT p.id_producto, p.clave, p.tipo, p.marca, p.precio_unit, pp.cantidad FROM ferrepaq.productos p, ferrepaq.produtos_pedidos pp WHERE pp.id_pedidosFK = \""+where+"\" AND pp.id_productosFK = p.id_producto");
                 
                 while(prods.next()){
                     
