@@ -472,7 +472,7 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
                 int id_emp;
                 
                 int pass = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese su contraseña"));
-                ResultSet r = st.executeQuery("SELECT * FROM empleados WHERE password = \""+pass+"\"");
+                ResultSet r = st.executeQuery("SELECT * FROM empleados WHERE password = "+pass+"");
                 
                 if(r.first()){
                     if(!" ".equals(lblID.getText()));{
