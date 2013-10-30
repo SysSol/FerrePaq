@@ -19,6 +19,7 @@ public class FormAdministrador extends javax.swing.JFrame {
         initComponents();
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         paneles.add(new PanelPedidosNuevo().getContentPane(), "Nuevo Pedido");
+        paneles.add(new PanelPedidos(), "Modificar Pedidos");
         paneles.add(new PanelProductos(),"Productos");
         paneles.add(new PanelClientes(),"Clientes");
         paneles.add(new PanelEmpleados(),"Empleados");
@@ -64,12 +65,7 @@ public class FormAdministrador extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            javax.swing.UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(FormAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {

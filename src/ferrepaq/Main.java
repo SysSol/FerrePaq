@@ -324,14 +324,20 @@ public class Main extends javax.swing.JFrame {
                     try {
                         sumt-=lastcant;
                         int cant = Integer.parseInt(JOptionPane.showInputDialog(this, "Introduce la nueva cantidad"));
-                        double subt;
-                        subt=cant*Double.parseDouble((String)Tab1.getValueAt(row, 4));
-                        subt=Math.floor(subt*100)/100;
-                        sumt+=subt;
-                        Tab1.setValueAt(subt+"",row, 6);
-                        Tab1.setValueAt(""+cant, row, 5);
-                        sumt=Math.floor(sumt*100)/100;
-                        lbltotal.setText("$"+sumt);
+                        int stock = Integer.parseInt(Tab1.getValueAt(row, 5)+"");
+                        if(cant <= stock){
+                            double subt;
+                            subt=cant*Double.parseDouble((String)Tab1.getValueAt(row, 4));
+                            subt=Math.floor(subt*100)/100;
+                            sumt+=subt;
+                            Tab1.setValueAt(subt+"",row, 6);
+                            Tab1.setValueAt(""+cant, row, 5);
+                            sumt=Math.floor(sumt*100)/100;
+                            lbltotal.setText("$"+sumt);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No se puede vender este producto por que no hay productos en existencia");
+                        }
+                        
                     }
                     catch(Exception e) {
                         System.err.println(e);
