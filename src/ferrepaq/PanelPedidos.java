@@ -4,6 +4,7 @@
  */
 package ferrepaq;
 
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,11 +30,9 @@ public class PanelPedidos extends javax.swing.JPanel {
     String [] columns = {"Id","Total","Cliente","Fecha"};
     String [] columns2 = {"Id","Clave","Tipo","Marca","Precio","Cantidad","Stock","Subtotal"};
     
+    
     public PanelPedidos() {
-        javax.swing.JTable jt = new javax.swing.JTable();
         try {
-            
-            
             Connection conn = Conexion.GetConnection();
             try {
                 st = conn.createStatement();
@@ -99,6 +98,7 @@ public class PanelPedidos extends javax.swing.JPanel {
         btnCommit = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         lbltotal = new javax.swing.JLabel();
+        buttonRefresh = new javax.swing.JButton();
 
         tabPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,10 +141,22 @@ public class PanelPedidos extends javax.swing.JPanel {
         jLabel2.setText("Productos");
 
         btnCommit.setText("Guardar");
+        btnCommit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCommitMouseClicked(evt);
+            }
+        });
 
         jLabel3.setText("Total:");
 
         lbltotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        buttonRefresh.setText("Refrescar");
+        buttonRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonRefreshMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -169,7 +181,8 @@ public class PanelPedidos extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lbltotal, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonRefresh)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCommit)))
                 .addContainerGap())
         );
@@ -192,7 +205,9 @@ public class PanelPedidos extends javax.swing.JPanel {
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbltotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCommit)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCommit)
+                            .addComponent(buttonRefresh))))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -253,14 +268,63 @@ public class PanelPedidos extends javax.swing.JPanel {
                 }
                 
             }
-            catch(Exception e) {
+            catch(HeadlessException | NumberFormatException e) {
                 System.err.println(e);
             }
         }
     }//GEN-LAST:event_tabProdsMouseClicked
+
+    private void btnCommitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCommitMouseClicked
+        try {
+            for(int i=0; i<tabProds.getRowCount(); i++){
+                st.execute( "UPDATE produtos_pedidos " +
+                        " SET cantidad=" + tabProds.getValueAt(i, 5) +
+                        " WHERE id_pedidosFK="+tabPedidos.getValueAt(tabPedidos.getSelectedRow(), 0)+
+                        " and id_productosFK="+tabProds.getValueAt(i, 0));
+                st.execute("UPDATE pedidos SET total_pedido = "+sumt+" WHERE id_pedido = "+tabPedidos.getValueAt(tabPedidos.getSelectedRow(), 0));
+                int stock = Integer.parseInt(tabProds.getValueAt(i, 6)+"");
+                int val = Integer.parseInt(tabProds.getValueAt(i, 5)+"");
+                st.execute("UPDATE productos SET cantidad = "+(stock-val)+" WHERE id_producto = "+tabProds.getValueAt(i, 0));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PanelPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCommitMouseClicked
+
+    private void buttonRefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonRefreshMouseClicked
+        try {
+            try {
+                Connection conn = Conexion.GetConnection();
+                st = conn.createStatement();
+                pedidos = st.executeQuery("SELECT id_pedido, total_pedido, nombre_cliente, fecha_pedido "
+                        + "FROM pedidos JOIN clientes ON id_clienteFK=id_cliente");
+                
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex.getErrorCode() + ": " + ex.getMessage());
+            }
+            DefaultTableModel tm =  new DefaultTableModel(null,columns);
+            tabProds.setModel(new DefaultTableModel(null,columns2));
+            sumt=0;
+            for(int i=0; i<tabProds.getRowCount();i++){
+                sumt+=Double.parseDouble(tabProds.getValueAt(i, 7)+"");
+            }
+            lbltotal.setText("$"+sumt);
+            while(pedidos.next()){
+                String [] row = {pedidos.getString(1),pedidos.getString(2),pedidos.getString(3),pedidos.getTimestamp(4)+""};
+                tm.addRow(row);
+            }
+            
+            tabPedidos.setModel(tm);
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_buttonRefreshMouseClicked
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCommit;
+    private javax.swing.JButton buttonRefresh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
