@@ -178,7 +178,7 @@ public class Main extends javax.swing.JFrame {
                 jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/switch.png"))); // NOI18N
 
-                btnSave.setText("Fnalizar Venta");
+                btnSave.setText("Finalizar Venta");
                 btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
                         btnSaveMouseClicked(evt);
