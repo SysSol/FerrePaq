@@ -133,7 +133,7 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
                 jLabel8 = new javax.swing.JLabel();
                 jLabel9 = new javax.swing.JLabel();
                 lbldesc = new javax.swing.JLabel();
-                jButton1 = new javax.swing.JButton();
+                btnDescuento = new javax.swing.JButton();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -193,6 +193,7 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
                 });
 
                 btnSave.setText("Fnalizar Venta");
+                btnSave.setEnabled(false);
                 btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
                         btnSaveMouseClicked(evt);
@@ -236,6 +237,7 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
 
                 txtDesc.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
                 txtDesc.setText("0");
+                txtDesc.setEnabled(false);
                 txtDesc.addKeyListener(new java.awt.event.KeyAdapter() {
                     public void keyTyped(java.awt.event.KeyEvent evt) {
                         txtDescKeyTyped(evt);
@@ -246,10 +248,13 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
 
                 jLabel9.setText("Total:");
 
-                jButton1.setText("Aplicar");
-                jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+                lbldesc.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+                btnDescuento.setText("Aplicar");
+                btnDescuento.setEnabled(false);
+                btnDescuento.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mousePressed(java.awt.event.MouseEvent evt) {
-                        jButton1MousePressed(evt);
+                        btnDescuentoMousePressed(evt);
                     }
                 });
 
@@ -303,7 +308,7 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel8)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButton1)
+                                                .addComponent(btnDescuento)
                                                 .addGap(98, 98, 98)
                                                 .addComponent(jLabel1)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -343,16 +348,16 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbltotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbltotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel7)
                                 .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel8)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel9)
                                 .addComponent(lbldesc, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1))
+                                .addComponent(btnDescuento))
                             .addComponent(lblID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -594,6 +599,8 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
             String id = ((String)Tab2.getValueAt(row,0));
             lblCliente.setText(nombre);
             lblID.setText(id);
+            txtDesc.setEnabled(true);
+            btnDescuento.setEnabled(true);
         }
         
     }//GEN-LAST:event_Tab2MouseClicked
@@ -605,7 +612,7 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txtDescKeyTyped
 
-    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+    private void btnDescuentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDescuentoMousePressed
         
         int descuento=0;
         if(!txtDesc.getText().equals("")){
@@ -616,7 +623,8 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
         }
         desct=sumt-sumt*(Double.parseDouble(""+descuento)/100);
         lbldesc.setText("$"+desct);
-    }//GEN-LAST:event_jButton1MousePressed
+        btnSave.setEnabled(true);
+    }//GEN-LAST:event_btnDescuentoMousePressed
     
     /**
      * @param args the command line arguments
@@ -651,9 +659,9 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
     private javax.swing.JTable Tab;
     private javax.swing.JTable Tab1;
     private javax.swing.JTable Tab2;
+    private javax.swing.JButton btnDescuento;
     private javax.swing.JButton btnRollBack;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
