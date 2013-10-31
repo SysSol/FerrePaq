@@ -5,7 +5,6 @@
 package ferrepaq;
 
 import java.awt.HeadlessException;
-import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
