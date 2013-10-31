@@ -47,13 +47,12 @@ public class Validacion extends JPanel{
         a.addKeyListener(new KeyAdapter(){
             public void keyTyped(KeyEvent e){
                 char c=e.getKeyChar();
-                if(!Character.isLetterOrDigit(c)){
+                if(!Character.isLetterOrDigit(c) && !Character.isSpaceChar(c)){
                     getToolkit().beep();
                     e.consume();
                 }
             }
-
-           
         });
     }
-}
+    
+}       //Fin Clase Validaciond

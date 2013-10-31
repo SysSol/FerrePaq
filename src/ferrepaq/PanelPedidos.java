@@ -151,7 +151,7 @@ public class PanelPedidos extends javax.swing.JPanel {
 
         lbltotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        buttonRefresh.setText("Refrescar");
+        buttonRefresh.setText("Actualizar");
         buttonRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 buttonRefreshMouseClicked(evt);
