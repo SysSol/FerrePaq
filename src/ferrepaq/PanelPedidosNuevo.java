@@ -192,7 +192,7 @@ public class PanelPedidosNuevo extends javax.swing.JFrame {
                     }
                 });
 
-                btnSave.setText("Fnalizar Venta");
+                btnSave.setText("Fnalizar Pedidos");
                 btnSave.setEnabled(false);
                 btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
