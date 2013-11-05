@@ -472,11 +472,16 @@ public class Main extends javax.swing.JFrame {
                         "AND PASSWORD ="+password);
                 
                 if(rs.first()){
-                    JOptionPane.showMessageDialog(this, "Abriendo ventana...");
-                    FormAdministrador fm = new FormAdministrador();
-                    fm.setVisible(true);
+                    if(rs.getInt(4)==1){
+                        JOptionPane.showMessageDialog(this, "Abriendo ventana...");
+                        FormAdministrador fm = new FormAdministrador();
+                        fm.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(this,"No tienes los permisos necesarios");
+                    }
+                    
                 } else {
-                    JOptionPane.showMessageDialog(this,"Usuarioo o contraseña inválidos");
+                    JOptionPane.showMessageDialog(this,"Usuario o contraseña inválidos");
                 }
             } catch(Exception e){
                 System.err.println(e);
